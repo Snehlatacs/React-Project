@@ -1,9 +1,11 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import ResCardShimmer from "../shimmer/ResCardShimmer";
+import {Link} from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState(""); // To manage search input
   const [allRestaurants, setAllRestaurants] = useState([]); // To keep original list for search reset
   const [loading, setLoading] = useState(true);
 
@@ -11,8 +13,8 @@ const Body = () => {
     const fetchRestaurants = async () => {
       try {
         setLoading(true);
-        const swiggyAPI =
-          "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6139&lng=77.2090&page_type=DESKTOP_WEB_LISTING";
+        const swiggyAPI = process.env.REACT_APP_SWIGGY_API;
+        
 
         const response = await fetch(swiggyAPI);
         const data = await response.json();
@@ -56,6 +58,23 @@ const Body = () => {
         <button className="search-btn" onClick={handleSearch}>
           Search
         </button>
+        <input
+          type="text"
+          placeholder="Search for restaurants"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}   
+        />
+        <button
+          className="search-btn"
+          onClick={() => {
+            const filteredRestaurants = allRestaurants.filter((res) =>
+              res.info.name.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setListOfRestaurants(filteredRestaurants);
+          }}
+        >
+          Search  
+        </button>
       </div>
       <div className="restaurant-list">
         {loading ? (
@@ -65,7 +84,9 @@ const Body = () => {
         ) : (
           listOfRestaurants.map((res) =>
             res.info ? (
-              <RestaurantCard key={res.info.id} resData={res.info} />
+              <Link to={`/restaurant/${res.info.id}`} key={res.info.id}>
+                <RestaurantCard resData={res.info} />
+              </Link>
             ) : null
           )
         )}

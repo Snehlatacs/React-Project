@@ -37,13 +37,22 @@
 .nav-items > ul > li:hover {
   color: #fc8019;
 }
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-link:hover {
+  color: #ff9933; /* or any color you want on hover */
+}
 
 .search-container {
   padding: 24px 0 8px 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
+  justify-content:center;
+  align-items:center;
+  gap: 2px;
+  
 }
 
 .search-container input[type="text"] {
@@ -69,6 +78,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: background 0.2s;
+  margin-right: 180px;
 }
 
 .search-btn:hover {
@@ -156,4 +166,20 @@
   color: #686b78;
   font-size: 15px;
   margin-top: 40px;
+}
+
+.login {
+  background: #fc8019;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-container{
+  display: flex;
+
 }
